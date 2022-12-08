@@ -1,16 +1,21 @@
 import ply.lex as lex
 
 reserved_words = (
-    'BRICK',
-    'SPIKE',
     'while'
+)
+
+blocks = (
+    'brick',
+    'spike'
 )
 
 tokens = (
     'NUMBER',
     'ADD_OP',
+    'MUL_OP',
     'IDENTIFIER',
-) + tuple(map(lambda s:s.upper(),reserved_words))
+) + tuple(map(lambda s:s.upper(),reserved_words)) + tuple(map(lambda s:s.upper(),blocks))
+
 
 literals = '( ) ; , { } ='
 t_ignore  = ' \t'
@@ -28,10 +33,16 @@ def t_IDENTIFIER(t):
     r'[A-Za-z_]\w*'
     if t.value in reserved_words:
         t.type = t.value.upper()
+    if t.value in blocks:
+        t.type = 'BLOCKNAME'
     return t
 
 def t_ADD_OP(t):
 	r'\+|-'
+	return t
+	
+def t_MUL_OP(t):
+	r'\*|/'
 	return t
     
 def t_newline(t):
