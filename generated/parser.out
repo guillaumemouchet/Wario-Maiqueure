@@ -1,0 +1,469 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> programme
+Rule 1     programme -> statement
+Rule 2     programme -> statement ; programme
+Rule 3     statement -> assignement
+Rule 4     statement -> while
+Rule 5     statement -> block
+Rule 6     assignement -> IDENTIFIER = expression
+Rule 7     while -> WHILE expression { programme }
+Rule 8     block -> BLOCKNAME ( listP )
+Rule 9     listP -> expression
+Rule 10    listP -> expression , listP
+Rule 11    expression -> NUMBER
+Rule 12    expression -> IDENTIFIER
+Rule 13    expression -> ( expression )
+Rule 14    expression -> expression ADD_OP expression
+Rule 15    expression -> expression MUL_OP expression
+
+Terminals, with rules where they appear
+
+(                    : 8 13
+)                    : 8 13
+,                    : 10
+;                    : 2
+=                    : 6
+ADD_OP               : 14
+BLOCKNAME            : 8
+IDENTIFIER           : 6 12
+MUL_OP               : 15
+NUMBER               : 11
+WHILE                : 7
+error                : 
+{                    : 7
+}                    : 7
+
+Nonterminals, with rules where they appear
+
+assignement          : 3
+block                : 5
+expression           : 6 7 9 10 13 14 14 15 15
+listP                : 8 10
+programme            : 2 7 0
+statement            : 1 2
+while                : 4
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programme
+    (1) programme -> . statement
+    (2) programme -> . statement ; programme
+    (3) statement -> . assignement
+    (4) statement -> . while
+    (5) statement -> . block
+    (6) assignement -> . IDENTIFIER = expression
+    (7) while -> . WHILE expression { programme }
+    (8) block -> . BLOCKNAME ( listP )
+
+    IDENTIFIER      shift and go to state 6
+    WHILE           shift and go to state 7
+    BLOCKNAME       shift and go to state 8
+
+    programme                      shift and go to state 1
+    statement                      shift and go to state 2
+    assignement                    shift and go to state 3
+    while                          shift and go to state 4
+    block                          shift and go to state 5
+
+state 1
+
+    (0) S' -> programme .
+
+
+
+state 2
+
+    (1) programme -> statement .
+    (2) programme -> statement . ; programme
+
+    $end            reduce using rule 1 (programme -> statement .)
+    }               reduce using rule 1 (programme -> statement .)
+    ;               shift and go to state 9
+
+
+state 3
+
+    (3) statement -> assignement .
+
+    ;               reduce using rule 3 (statement -> assignement .)
+    $end            reduce using rule 3 (statement -> assignement .)
+    }               reduce using rule 3 (statement -> assignement .)
+
+
+state 4
+
+    (4) statement -> while .
+
+    ;               reduce using rule 4 (statement -> while .)
+    $end            reduce using rule 4 (statement -> while .)
+    }               reduce using rule 4 (statement -> while .)
+
+
+state 5
+
+    (5) statement -> block .
+
+    ;               reduce using rule 5 (statement -> block .)
+    $end            reduce using rule 5 (statement -> block .)
+    }               reduce using rule 5 (statement -> block .)
+
+
+state 6
+
+    (6) assignement -> IDENTIFIER . = expression
+
+    =               shift and go to state 10
+
+
+state 7
+
+    (7) while -> WHILE . expression { programme }
+    (11) expression -> . NUMBER
+    (12) expression -> . IDENTIFIER
+    (13) expression -> . ( expression )
+    (14) expression -> . expression ADD_OP expression
+    (15) expression -> . expression MUL_OP expression
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    (               shift and go to state 14
+
+    expression                     shift and go to state 11
+
+state 8
+
+    (8) block -> BLOCKNAME . ( listP )
+
+    (               shift and go to state 15
+
+
+state 9
+
+    (2) programme -> statement ; . programme
+    (1) programme -> . statement
+    (2) programme -> . statement ; programme
+    (3) statement -> . assignement
+    (4) statement -> . while
+    (5) statement -> . block
+    (6) assignement -> . IDENTIFIER = expression
+    (7) while -> . WHILE expression { programme }
+    (8) block -> . BLOCKNAME ( listP )
+
+    IDENTIFIER      shift and go to state 6
+    WHILE           shift and go to state 7
+    BLOCKNAME       shift and go to state 8
+
+    statement                      shift and go to state 2
+    programme                      shift and go to state 16
+    assignement                    shift and go to state 3
+    while                          shift and go to state 4
+    block                          shift and go to state 5
+
+state 10
+
+    (6) assignement -> IDENTIFIER = . expression
+    (11) expression -> . NUMBER
+    (12) expression -> . IDENTIFIER
+    (13) expression -> . ( expression )
+    (14) expression -> . expression ADD_OP expression
+    (15) expression -> . expression MUL_OP expression
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    (               shift and go to state 14
+
+    expression                     shift and go to state 17
+
+state 11
+
+    (7) while -> WHILE expression . { programme }
+    (14) expression -> expression . ADD_OP expression
+    (15) expression -> expression . MUL_OP expression
+
+    {               shift and go to state 18
+    ADD_OP          shift and go to state 19
+    MUL_OP          shift and go to state 20
+
+
+state 12
+
+    (11) expression -> NUMBER .
+
+    {               reduce using rule 11 (expression -> NUMBER .)
+    ADD_OP          reduce using rule 11 (expression -> NUMBER .)
+    MUL_OP          reduce using rule 11 (expression -> NUMBER .)
+    ;               reduce using rule 11 (expression -> NUMBER .)
+    $end            reduce using rule 11 (expression -> NUMBER .)
+    }               reduce using rule 11 (expression -> NUMBER .)
+    )               reduce using rule 11 (expression -> NUMBER .)
+    ,               reduce using rule 11 (expression -> NUMBER .)
+
+
+state 13
+
+    (12) expression -> IDENTIFIER .
+
+    {               reduce using rule 12 (expression -> IDENTIFIER .)
+    ADD_OP          reduce using rule 12 (expression -> IDENTIFIER .)
+    MUL_OP          reduce using rule 12 (expression -> IDENTIFIER .)
+    ;               reduce using rule 12 (expression -> IDENTIFIER .)
+    $end            reduce using rule 12 (expression -> IDENTIFIER .)
+    }               reduce using rule 12 (expression -> IDENTIFIER .)
+    )               reduce using rule 12 (expression -> IDENTIFIER .)
+    ,               reduce using rule 12 (expression -> IDENTIFIER .)
+
+
+state 14
+
+    (13) expression -> ( . expression )
+    (11) expression -> . NUMBER
+    (12) expression -> . IDENTIFIER
+    (13) expression -> . ( expression )
+    (14) expression -> . expression ADD_OP expression
+    (15) expression -> . expression MUL_OP expression
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    (               shift and go to state 14
+
+    expression                     shift and go to state 21
+
+state 15
+
+    (8) block -> BLOCKNAME ( . listP )
+    (9) listP -> . expression
+    (10) listP -> . expression , listP
+    (11) expression -> . NUMBER
+    (12) expression -> . IDENTIFIER
+    (13) expression -> . ( expression )
+    (14) expression -> . expression ADD_OP expression
+    (15) expression -> . expression MUL_OP expression
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    (               shift and go to state 14
+
+    listP                          shift and go to state 22
+    expression                     shift and go to state 23
+
+state 16
+
+    (2) programme -> statement ; programme .
+
+    $end            reduce using rule 2 (programme -> statement ; programme .)
+    }               reduce using rule 2 (programme -> statement ; programme .)
+
+
+state 17
+
+    (6) assignement -> IDENTIFIER = expression .
+    (14) expression -> expression . ADD_OP expression
+    (15) expression -> expression . MUL_OP expression
+
+    ;               reduce using rule 6 (assignement -> IDENTIFIER = expression .)
+    $end            reduce using rule 6 (assignement -> IDENTIFIER = expression .)
+    }               reduce using rule 6 (assignement -> IDENTIFIER = expression .)
+    ADD_OP          shift and go to state 19
+    MUL_OP          shift and go to state 20
+
+
+state 18
+
+    (7) while -> WHILE expression { . programme }
+    (1) programme -> . statement
+    (2) programme -> . statement ; programme
+    (3) statement -> . assignement
+    (4) statement -> . while
+    (5) statement -> . block
+    (6) assignement -> . IDENTIFIER = expression
+    (7) while -> . WHILE expression { programme }
+    (8) block -> . BLOCKNAME ( listP )
+
+    IDENTIFIER      shift and go to state 6
+    WHILE           shift and go to state 7
+    BLOCKNAME       shift and go to state 8
+
+    programme                      shift and go to state 24
+    statement                      shift and go to state 2
+    assignement                    shift and go to state 3
+    while                          shift and go to state 4
+    block                          shift and go to state 5
+
+state 19
+
+    (14) expression -> expression ADD_OP . expression
+    (11) expression -> . NUMBER
+    (12) expression -> . IDENTIFIER
+    (13) expression -> . ( expression )
+    (14) expression -> . expression ADD_OP expression
+    (15) expression -> . expression MUL_OP expression
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    (               shift and go to state 14
+
+    expression                     shift and go to state 25
+
+state 20
+
+    (15) expression -> expression MUL_OP . expression
+    (11) expression -> . NUMBER
+    (12) expression -> . IDENTIFIER
+    (13) expression -> . ( expression )
+    (14) expression -> . expression ADD_OP expression
+    (15) expression -> . expression MUL_OP expression
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    (               shift and go to state 14
+
+    expression                     shift and go to state 26
+
+state 21
+
+    (13) expression -> ( expression . )
+    (14) expression -> expression . ADD_OP expression
+    (15) expression -> expression . MUL_OP expression
+
+    )               shift and go to state 27
+    ADD_OP          shift and go to state 19
+    MUL_OP          shift and go to state 20
+
+
+state 22
+
+    (8) block -> BLOCKNAME ( listP . )
+
+    )               shift and go to state 28
+
+
+state 23
+
+    (9) listP -> expression .
+    (10) listP -> expression . , listP
+    (14) expression -> expression . ADD_OP expression
+    (15) expression -> expression . MUL_OP expression
+
+    )               reduce using rule 9 (listP -> expression .)
+    ,               shift and go to state 29
+    ADD_OP          shift and go to state 19
+    MUL_OP          shift and go to state 20
+
+
+state 24
+
+    (7) while -> WHILE expression { programme . }
+
+    }               shift and go to state 30
+
+
+state 25
+
+    (14) expression -> expression ADD_OP expression .
+    (14) expression -> expression . ADD_OP expression
+    (15) expression -> expression . MUL_OP expression
+
+  ! shift/reduce conflict for ADD_OP resolved as shift
+  ! shift/reduce conflict for MUL_OP resolved as shift
+    {               reduce using rule 14 (expression -> expression ADD_OP expression .)
+    ;               reduce using rule 14 (expression -> expression ADD_OP expression .)
+    $end            reduce using rule 14 (expression -> expression ADD_OP expression .)
+    }               reduce using rule 14 (expression -> expression ADD_OP expression .)
+    )               reduce using rule 14 (expression -> expression ADD_OP expression .)
+    ,               reduce using rule 14 (expression -> expression ADD_OP expression .)
+    ADD_OP          shift and go to state 19
+    MUL_OP          shift and go to state 20
+
+  ! ADD_OP          [ reduce using rule 14 (expression -> expression ADD_OP expression .) ]
+  ! MUL_OP          [ reduce using rule 14 (expression -> expression ADD_OP expression .) ]
+
+
+state 26
+
+    (15) expression -> expression MUL_OP expression .
+    (14) expression -> expression . ADD_OP expression
+    (15) expression -> expression . MUL_OP expression
+
+  ! shift/reduce conflict for ADD_OP resolved as shift
+  ! shift/reduce conflict for MUL_OP resolved as shift
+    {               reduce using rule 15 (expression -> expression MUL_OP expression .)
+    ;               reduce using rule 15 (expression -> expression MUL_OP expression .)
+    $end            reduce using rule 15 (expression -> expression MUL_OP expression .)
+    }               reduce using rule 15 (expression -> expression MUL_OP expression .)
+    )               reduce using rule 15 (expression -> expression MUL_OP expression .)
+    ,               reduce using rule 15 (expression -> expression MUL_OP expression .)
+    ADD_OP          shift and go to state 19
+    MUL_OP          shift and go to state 20
+
+  ! ADD_OP          [ reduce using rule 15 (expression -> expression MUL_OP expression .) ]
+  ! MUL_OP          [ reduce using rule 15 (expression -> expression MUL_OP expression .) ]
+
+
+state 27
+
+    (13) expression -> ( expression ) .
+
+    {               reduce using rule 13 (expression -> ( expression ) .)
+    ADD_OP          reduce using rule 13 (expression -> ( expression ) .)
+    MUL_OP          reduce using rule 13 (expression -> ( expression ) .)
+    ;               reduce using rule 13 (expression -> ( expression ) .)
+    $end            reduce using rule 13 (expression -> ( expression ) .)
+    }               reduce using rule 13 (expression -> ( expression ) .)
+    )               reduce using rule 13 (expression -> ( expression ) .)
+    ,               reduce using rule 13 (expression -> ( expression ) .)
+
+
+state 28
+
+    (8) block -> BLOCKNAME ( listP ) .
+
+    ;               reduce using rule 8 (block -> BLOCKNAME ( listP ) .)
+    $end            reduce using rule 8 (block -> BLOCKNAME ( listP ) .)
+    }               reduce using rule 8 (block -> BLOCKNAME ( listP ) .)
+
+
+state 29
+
+    (10) listP -> expression , . listP
+    (9) listP -> . expression
+    (10) listP -> . expression , listP
+    (11) expression -> . NUMBER
+    (12) expression -> . IDENTIFIER
+    (13) expression -> . ( expression )
+    (14) expression -> . expression ADD_OP expression
+    (15) expression -> . expression MUL_OP expression
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    (               shift and go to state 14
+
+    expression                     shift and go to state 23
+    listP                          shift and go to state 31
+
+state 30
+
+    (7) while -> WHILE expression { programme } .
+
+    ;               reduce using rule 7 (while -> WHILE expression { programme } .)
+    $end            reduce using rule 7 (while -> WHILE expression { programme } .)
+    }               reduce using rule 7 (while -> WHILE expression { programme } .)
+
+
+state 31
+
+    (10) listP -> expression , listP .
+
+    )               reduce using rule 10 (listP -> expression , listP .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ADD_OP in state 25 resolved as shift
+WARNING: shift/reduce conflict for MUL_OP in state 25 resolved as shift
+WARNING: shift/reduce conflict for ADD_OP in state 26 resolved as shift
+WARNING: shift/reduce conflict for MUL_OP in state 26 resolved as shift

@@ -1,12 +1,13 @@
 import ply.lex as lex
 
 reserved_words = (
-    'while'
+    'while',
+    'blockname',
 )
 
 blocks = (
-    'brick',
-    'spike'
+    'BRICK',
+    'SPIKE',
 )
 
 tokens = (
@@ -14,7 +15,7 @@ tokens = (
     'ADD_OP',
     'MUL_OP',
     'IDENTIFIER',
-) + tuple(map(lambda s:s.upper(),reserved_words)) + tuple(map(lambda s:s.upper(),blocks))
+) + tuple(map(lambda s:s.upper(),reserved_words))
 
 
 literals = '( ) ; , { } ='
@@ -57,11 +58,11 @@ lex.lex()
 
 if __name__ == "__main__":
     import sys
-    prog = open("Projet/test.txt").read()
-
+    prog = open(sys.argv[1]).read()
+    print(tokens)
     lex.input(prog)
 
     while 1:
         tok = lex.token()
         if not tok: break
-        print ("line %d: %s" % (tok.lineno, tok.value))
+        print ("line %d: %s(%s)" % (tok.lineno, tok.type, tok.value))
