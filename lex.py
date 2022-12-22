@@ -22,7 +22,7 @@ literals = '( ) ; , { } ='
 t_ignore  = ' \t'
  
 def t_NUMBER(t):
-    r'\d'
+    r'\d+'
     try:
         t.value = int(t.value)    
     except ValueError:

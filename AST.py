@@ -131,26 +131,17 @@ class EntryNode(Node):
         Node.__init__(self, None)
 
 
-class ListPNode(Node):
-    type = 'listP'
-    #Faut passer des noeuds et pas des valeurs !
-    def __init__(self, children):
-        Node.__init__(self, children)
-        #self.posX = x
-        #self.posY = y
-        #self.rot = rot
+# class ListPNode(Node):
+#     type = 'listP'
 
-    def __repr__(self):
-        return repr(self.tok)
 class BlockNode(Node):
     type = 'block'
-    def __init__(self, children):
-        Node.__init__(self, children)
-        #self.blockname
-        #self.listP
-
+    def __init__(self, name, children):
+        Node.__init__(self,children)
+        self.name = name
+        
     def __repr__(self):
-        return repr(self.tok)
+        return self.name
     
 def addToClass(cls):
     ''' D�corateur permettant d'ajouter la fonction d�cor�e en tant que m�thode

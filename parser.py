@@ -37,16 +37,24 @@ def p_while(p):
 
 def p_block(p):
     ''' block : BLOCKNAME '(' listP ')' '''
-    p[0] = AST.BlockNode(p[1], AST.ListPNode(p[3]))
+    p[0] = AST.BlockNode(p[1], p[3])
 
 def p_listP(p):
-    ''' listP : expression
+    ''' listP : expression 
                 | expression ',' listP '''
+        
     try:
-        p[0] = AST.ListPNode([p[1]]+p[3].children) #changer AST
+        print("p1 t" , p[1])
+        print("p3 t" , p[3])
+        p[0] = [p[1]]+p[3]
+        #p[0] = [p[1]]+p[3].children
+        print("p0 t",p[0])
     except:
-        p[0] = AST.ListPNode(p[1])  #changer AST
-        #p[0] = p[1] ?
+        
+            print("p1 e",p[1])
+            p[0] = [p[1]]
+            print("p0 e",p[0])
+
 def p_expression_num_or_var(p):
     '''expression : NUMBER 
                 | IDENTIFIER''' 
@@ -65,21 +73,47 @@ def p_error(p):
     print ("Syntax error in line %d" % p.lineno)
     yacc.errok()
 
-def parse(prog):
+def parse(prog):    
 	return yacc.parse(prog)
 
 yacc.yacc(outputdir='generated')
 
-if __name__ == "__main__":
-	import sys 
-	import os
-	
-	prog = open(sys.argv[1]).read()
-	result = yacc.parse(prog)
-	print (result)
+@addToClass(AST.Node)
+def thread(self, lastNode):
+    for c in self.children:
+        lastNode = c.thread(lastNode)
+    lastNode.addNext(self)
+    return self
 
-	os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
-	graph = result.makegraphicaltree()
-	name = os.path.splitext(sys.argv[1])[0]+'-ast.pdf'
-	graph.write_pdf(name)
-	print("wrote ast to ", name)
+@addToClass(AST.WhileNode)
+def thread(self, lastNode):
+    mem = lastNode
+
+    lastNode = self.children[0].thread(lastNode)
+    lastNode.addNext(self)
+    lastNode = self.children[1].thread(self)
+
+    lastNode.addNext(mem.next[-1])
+    return self
+
+
+def thread(tree):
+    entry = AST.EntryNode()
+    tree.thread(entry)
+    return entry
+
+
+if __name__ == "__main__":
+    from parser import parse
+    import os, sys
+    prog = open(sys.argv[1]).read()
+    ast = parse(prog)
+    entry = thread(ast)
+
+    os.environ["PATH"] += os.pathsep + \
+        'C:\\Program Files (x86)\\Graphviz2.38\\bin\\'
+    graph = ast.makegraphicaltree()
+    entry.threadTree(graph)
+    name = os.path.splitext(sys.argv[1])[0]+'-ast.pdf'
+    graph.write_pdf(name)
+    print("wrote ast to ", name)
