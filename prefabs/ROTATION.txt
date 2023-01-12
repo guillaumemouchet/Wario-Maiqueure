@@ -1,0 +1,31 @@
+m_LocalRotation.w
+WWWWW = 1
+m_LocalRotation.z
+ZZZZZ = 0
+m_LocalEulerAnglesHint.z
+RRRRR = 0
+
+
+m_LocalRotation.w
+WWWWW = 0.7071068
+m_LocalRotation.z
+ZZZZZ = 0.7071068
+m_LocalEulerAnglesHint.z
+90
+
+
+m_LocalRotation.w
+WWWWW = 0
+m_LocalRotation.z
+ZZZZZ = 1
+m_LocalEulerAnglesHint.z
+RRRRR = 180
+
+
+TODODO
+m_LocalRotation.w
+WWWWW = -0.7071068
+m_LocalRotation.z
+ZZZZZ = 0.7071068
+m_LocalEulerAnglesHint.z
+RRRRR = 270
