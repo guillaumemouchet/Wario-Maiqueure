@@ -1,1 +1,1 @@
-  - component: {fileID: AAAAA}
+  - {fileID: AAAAA}

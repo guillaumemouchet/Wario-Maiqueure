@@ -1,6 +1,7 @@
 # coding=utf-8
 import AST
 from AST import addToClass
+import shutil
 
 # opcodes de la SVM
 #    PUSHC <val>     pushes the constant <val> on the stack
@@ -17,7 +18,6 @@ from AST import addToClass
 
 # Global id for the blocks, incremented 2 times per blocks
 block_id = 1000
-
 #List of first id of each block, to be added in the TERRAIN_MIDDLE.txt file
 list_id_terrain = []
 
@@ -25,6 +25,7 @@ list_id_terrain = []
 return tuple[w,z,r] -> valued defined in ROTATION.txt
 '''
 def rotationToUnity(rotation:int):
+	rotation = int(rotation)
 	if(rotation>=360):
 		rotation = rotation % 360
   
@@ -61,6 +62,7 @@ vars = {}
 def whilecounter():
 	whilecounter.current += 1
 	return whilecounter.current
+
 whilecounter.current = 0
 
 # noeud de programme
@@ -94,7 +96,6 @@ def compile(self):
 def compile(self):
 	# bytecode += self.children[1].compile()
 	# bytecode += "SET %s\n" % self.children[0].tok
-		# TODO regarder si il y a un OPNode à droit su assign node
 	try:
 		vars.update({self.children[0].tok : int(self.children[1].tok)})
 	except:
@@ -140,19 +141,57 @@ def compile(self):
 # Create block in format NAME(x,y,rot)
 @addToClass(AST.BlockNode)
 def compile(self):
-    bytecode = ""
-    bytecode += self.name
-    bytecode += "("
-    bytecode += self.children[0].compile()
-    bytecode += ", "
-    bytecode += self.children[1].compile()
-    bytecode += ", "
-    try:
-        bytecode += self.children[2].compile()
-    except:
-        bytecode += "0"
-    bytecode += ")\n"
-    return bytecode
+	global block_id
+	AAAAA = block_id
+	BBBBB = block_id + 1
+	XXXXX = self.children[0].compile()
+	YYYYY = self.children[1].compile()
+	try:
+		RRRRR = self.children[2].compile()
+	except:
+		RRRRR = 0
+   	
+	WWWWW, ZZZZZ, RRRRR = rotationToUnity(RRRRR)
+
+	list_id_terrain.append(AAAAA)
+
+	fileName = self.name
+ 
+	source = "./prefabs/"+ fileName + ".txt"
+	destination = "./result/"+ fileName + str(AAAAA) + ".txt"
+	shutil.copyfile(source, destination)
+	with open(destination, 'r') as file:
+		data = file.read()
+		data = data.replace("AAAAA", str(AAAAA))
+		data = data.replace("BBBBB", str(BBBBB))
+		data = data.replace("XXXXX", str(XXXXX))
+		data = data.replace("YYYYY", str(YYYYY))
+		data = data.replace("WWWWW", str(WWWWW))
+		data = data.replace("ZZZZZ", str(ZZZZZ))
+		data = data.replace("RRRRR", str(RRRRR))
+
+	with open(destination, 'w') as file:
+	
+		# Writing the replaced data in our
+		# text file
+		file.write(data)
+  
+	bytecode = ""
+	bytecode += self.name
+	bytecode += "("
+	bytecode += self.children[0].compile()
+	bytecode += ", "
+	bytecode += self.children[1].compile()
+	bytecode += ", "
+	try:
+		bytecode += self.children[2].compile()
+	except:
+		bytecode += "0"
+	bytecode += ")\n"
+    
+    
+	block_id +=2
+	return bytecode
     
 	
 # noeud de boucle while
@@ -170,19 +209,109 @@ def compile(self):
 	bytecode = ""
 	print("While counter", counter)
 	
-	## TRY THIS !!
 	while (int(self.children[0].compile())<=0):
-		#bytecode += f"{counter}\n"
-		#bytecode += f"{counter}: "
 		bytecode += str(self.children[1].compile())
-		#bytecode += f"{counter}: "
-		#bytecode += str(self.children[0].compile())
-		#bytecode += f"counter : {counter}\n"
 	return bytecode
+
+def terrain_middle():
+	fileName = "TERRAIN_MIDDLE"
+	source = "./prefabs/"+ fileName + ".txt"	
+
+	destination = "./result/"+ fileName + "_Modified.txt"
+  
+	#Create Terrain Middle
+	open(destination, 'x')
+ 
+	with open(source, 'r') as file:
+		data = file.read()
+
+	for item in list_id_terrain:
+		datalocal = data
+		datalocal = datalocal.replace("AAAAA", str(item))
+  
+		with open(destination, 'a') as file:
+		
+			# Writing the replaced data in our
+			# text file
+			file.write(datalocal+"\n")
+   
+def start_of_exec():
+	directories = os.listdir("./result/")
+
+	# This would print all the files and directories
+	for file in directories:
+		print(file)
+		os.remove("./result/"+file)
+  
+def end_of_exec():
+	terrain_middle()
+	print()
+	# Fusionner le tout et le nommer Projet Compilateur.unity (déplacer manuellement dans le projet)
+	# HEADER -> do not touch
+	# TERRAIN_HEADER -> do not touch
+	# TERRAIN_MIDDLE_Modified
+	# TERRAIN_FOOTER -> do not touch
+	# BRICK or SPIKE
+	# FOOTER -> do not touch
+	HEADER = "./prefabs/HEADER.txt"
+	TERRAIN_HEADER = "./prefabs/TERRAIN_HEADER.txt"
+	TERRAIN_MIDDLE_Modified = "./result/TERRAIN_MIDDLE_Modified.txt"
+	TERRAIN_FOOTER = "./prefabs/TERRAIN_FOOTER.txt"
+	# Comment récupérer les fichiers ? 
+	name_of_files = []
+	directories = os.listdir("./result/")
+	# This would print all the files and directories
+	for file in directories:
+		if(file != "TERRAIN_MIDDLE_Modified.txt"):
+			name_of_files.append(file)
+	FOOTER = "./prefabs/FOOTER.txt"
+ 
+	# Create final texte
+	project = "./result/Projet Compilateur.unity"
+	open(project, 'x')
+ 
+	with open(HEADER, 'r') as file:
+		header_data = file.read()
+  
+	with open(TERRAIN_HEADER, 'r') as file:
+		terrain_header_data = file.read()
+   
+	with open(TERRAIN_MIDDLE_Modified, 'r') as file:
+		terrain_middle_data = file.read()
+   
+	with open(TERRAIN_FOOTER, 'r') as file:
+		terrain_footer_data = file.read()
+   
+	content_of_file = []
+	for nameFile in name_of_files:
+		with open("./result/"+nameFile, 'r') as file:
+			content_of_file.append(file.read())
+
+	with open(FOOTER, 'r') as file:
+		footer_data = file.read()
+   
+	with open(project, 'a') as file:
+
+			file.write(header_data+"\n")
+			file.write(terrain_header_data+"\n")
+
+			file.write(terrain_middle_data+"\n")
+
+			file.write(terrain_footer_data+"\n")
+
+			for content in content_of_file:
+				file.write(content+"\n")
+			file.write(footer_data+"\n")
+
+
 	
+
+	
+
 if __name__ == "__main__":
     from parser import parse
     import sys, os
+    start_of_exec()
     prog = open(sys.argv[1]).read()
     ast = parse(prog)
     print(ast)
@@ -192,3 +321,4 @@ if __name__ == "__main__":
     outfile.write(compiled)
     outfile.close()
     print ("Wrote output to", name)
+    end_of_exec()
