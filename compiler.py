@@ -230,46 +230,40 @@ def terrain_middle():
 		datalocal = datalocal.replace("AAAAA", str(item))
   
 		with open(destination, 'a') as file:
-		
-			# Writing the replaced data in our
-			# text file
 			file.write(datalocal+"\n")
    
 def start_of_exec():
+    #Remove old result files
 	directories = os.listdir("./result/")
 
-	# This would print all the files and directories
 	for file in directories:
 		print(file)
 		os.remove("./result/"+file)
   
 def end_of_exec():
 	terrain_middle()
-	print()
-	# Fusionner le tout et le nommer Projet Compilateur.unity (déplacer manuellement dans le projet)
-	# HEADER -> do not touch
-	# TERRAIN_HEADER -> do not touch
-	# TERRAIN_MIDDLE_Modified
-	# TERRAIN_FOOTER -> do not touch
-	# BRICK or SPIKE
-	# FOOTER -> do not touch
+	# Fuse all and name it Projet Compilateur.unity 
+
 	HEADER = "./prefabs/HEADER.txt"
 	TERRAIN_HEADER = "./prefabs/TERRAIN_HEADER.txt"
 	TERRAIN_MIDDLE_Modified = "./result/TERRAIN_MIDDLE_Modified.txt"
 	TERRAIN_FOOTER = "./prefabs/TERRAIN_FOOTER.txt"
-	# Comment récupérer les fichiers ? 
+ 
+	# Get all Brick and Spike files created
 	name_of_files = []
 	directories = os.listdir("./result/")
-	# This would print all the files and directories
 	for file in directories:
 		if(file != "TERRAIN_MIDDLE_Modified.txt"):
 			name_of_files.append(file)
+   
 	FOOTER = "./prefabs/FOOTER.txt"
  
-	# Create final texte
+	# Create final File
 	project = "./result/Projet Compilateur.unity"
 	open(project, 'x')
  
+ 
+	# Read all the files
 	with open(HEADER, 'r') as file:
 		header_data = file.read()
   
@@ -290,6 +284,8 @@ def end_of_exec():
 	with open(FOOTER, 'r') as file:
 		footer_data = file.read()
    
+   
+   # Append all the files to the new one
 	with open(project, 'a') as file:
 
 			file.write(header_data+"\n")
@@ -302,6 +298,10 @@ def end_of_exec():
 			for content in content_of_file:
 				file.write(content+"\n")
 			file.write(footer_data+"\n")
+   
+   	# Add Manually the result to the unity project
+	print("Projet Compilateur.unity Created succesfully, please move it in the folder of the Unity project")
+	print("Assets->Scenes-> replace old .unity file")
 
 
 	
