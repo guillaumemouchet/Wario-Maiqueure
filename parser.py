@@ -68,6 +68,10 @@ def p_expression_op(p):
     '''expression : expression ADD_OP expression 
                 | expression MUL_OP expression '''
     p[0] = AST.OpNode(p[2], [p[1], p[3]])
+    
+def p_minus(p):
+    ''' expression : ADD_OP expression %prec UMINUS'''
+    p[0] = AST.OpNode(p[1], [p[2]])
 
 def p_error(p):
     print ("Syntax error in line %d" % p.lineno)
@@ -75,6 +79,13 @@ def p_error(p):
 
 def parse(prog):    
 	return yacc.parse(prog)
+
+precedence = (
+    ('left', 'ADD_OP'),
+    ('left', 'MUL_OP'),
+    ('right', 'UMINUS'),
+)
+
 
 yacc.yacc(outputdir='generated')
 

@@ -18,6 +18,7 @@ Rule 12    expression -> IDENTIFIER
 Rule 13    expression -> ( expression )
 Rule 14    expression -> expression ADD_OP expression
 Rule 15    expression -> expression MUL_OP expression
+Rule 16    expression -> ADD_OP expression
 
 Terminals, with rules where they appear
 
@@ -26,7 +27,7 @@ Terminals, with rules where they appear
 ,                    : 10
 ;                    : 2
 =                    : 6
-ADD_OP               : 14
+ADD_OP               : 14 16
 BLOCKNAME            : 8
 IDENTIFIER           : 6 12
 MUL_OP               : 15
@@ -40,7 +41,7 @@ Nonterminals, with rules where they appear
 
 assignement          : 3
 block                : 5
-expression           : 6 7 9 10 13 14 14 15 15
+expression           : 6 7 9 10 13 14 14 15 15 16
 listP                : 8 10
 programme            : 2 7 0
 statement            : 1 2
@@ -128,10 +129,12 @@ state 7
     (13) expression -> . ( expression )
     (14) expression -> . expression ADD_OP expression
     (15) expression -> . expression MUL_OP expression
+    (16) expression -> . ADD_OP expression
 
     NUMBER          shift and go to state 12
     IDENTIFIER      shift and go to state 13
     (               shift and go to state 14
+    ADD_OP          shift and go to state 15
 
     expression                     shift and go to state 11
 
@@ -139,7 +142,7 @@ state 8
 
     (8) block -> BLOCKNAME . ( listP )
 
-    (               shift and go to state 15
+    (               shift and go to state 16
 
 
 state 9
@@ -159,7 +162,7 @@ state 9
     BLOCKNAME       shift and go to state 8
 
     statement                      shift and go to state 2
-    programme                      shift and go to state 16
+    programme                      shift and go to state 17
     assignement                    shift and go to state 3
     while                          shift and go to state 4
     block                          shift and go to state 5
@@ -172,12 +175,14 @@ state 10
     (13) expression -> . ( expression )
     (14) expression -> . expression ADD_OP expression
     (15) expression -> . expression MUL_OP expression
+    (16) expression -> . ADD_OP expression
 
     NUMBER          shift and go to state 12
     IDENTIFIER      shift and go to state 13
     (               shift and go to state 14
+    ADD_OP          shift and go to state 15
 
-    expression                     shift and go to state 17
+    expression                     shift and go to state 18
 
 state 11
 
@@ -185,9 +190,9 @@ state 11
     (14) expression -> expression . ADD_OP expression
     (15) expression -> expression . MUL_OP expression
 
-    {               shift and go to state 18
-    ADD_OP          shift and go to state 19
-    MUL_OP          shift and go to state 20
+    {               shift and go to state 19
+    ADD_OP          shift and go to state 20
+    MUL_OP          shift and go to state 21
 
 
 state 12
@@ -226,14 +231,33 @@ state 14
     (13) expression -> . ( expression )
     (14) expression -> . expression ADD_OP expression
     (15) expression -> . expression MUL_OP expression
+    (16) expression -> . ADD_OP expression
 
     NUMBER          shift and go to state 12
     IDENTIFIER      shift and go to state 13
     (               shift and go to state 14
+    ADD_OP          shift and go to state 15
 
-    expression                     shift and go to state 21
+    expression                     shift and go to state 22
 
 state 15
+
+    (16) expression -> ADD_OP . expression
+    (11) expression -> . NUMBER
+    (12) expression -> . IDENTIFIER
+    (13) expression -> . ( expression )
+    (14) expression -> . expression ADD_OP expression
+    (15) expression -> . expression MUL_OP expression
+    (16) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    (               shift and go to state 14
+    ADD_OP          shift and go to state 15
+
+    expression                     shift and go to state 23
+
+state 16
 
     (8) block -> BLOCKNAME ( . listP )
     (9) listP -> . expression
@@ -243,15 +267,17 @@ state 15
     (13) expression -> . ( expression )
     (14) expression -> . expression ADD_OP expression
     (15) expression -> . expression MUL_OP expression
+    (16) expression -> . ADD_OP expression
 
     NUMBER          shift and go to state 12
     IDENTIFIER      shift and go to state 13
     (               shift and go to state 14
+    ADD_OP          shift and go to state 15
 
-    listP                          shift and go to state 22
-    expression                     shift and go to state 23
+    listP                          shift and go to state 24
+    expression                     shift and go to state 25
 
-state 16
+state 17
 
     (2) programme -> statement ; programme .
 
@@ -259,7 +285,7 @@ state 16
     }               reduce using rule 2 (programme -> statement ; programme .)
 
 
-state 17
+state 18
 
     (6) assignement -> IDENTIFIER = expression .
     (14) expression -> expression . ADD_OP expression
@@ -268,11 +294,11 @@ state 17
     ;               reduce using rule 6 (assignement -> IDENTIFIER = expression .)
     $end            reduce using rule 6 (assignement -> IDENTIFIER = expression .)
     }               reduce using rule 6 (assignement -> IDENTIFIER = expression .)
-    ADD_OP          shift and go to state 19
-    MUL_OP          shift and go to state 20
+    ADD_OP          shift and go to state 20
+    MUL_OP          shift and go to state 21
 
 
-state 18
+state 19
 
     (7) while -> WHILE expression { . programme }
     (1) programme -> . statement
@@ -288,13 +314,13 @@ state 18
     WHILE           shift and go to state 7
     BLOCKNAME       shift and go to state 8
 
-    programme                      shift and go to state 24
+    programme                      shift and go to state 26
     statement                      shift and go to state 2
     assignement                    shift and go to state 3
     while                          shift and go to state 4
     block                          shift and go to state 5
 
-state 19
+state 20
 
     (14) expression -> expression ADD_OP . expression
     (11) expression -> . NUMBER
@@ -302,14 +328,16 @@ state 19
     (13) expression -> . ( expression )
     (14) expression -> . expression ADD_OP expression
     (15) expression -> . expression MUL_OP expression
+    (16) expression -> . ADD_OP expression
 
     NUMBER          shift and go to state 12
     IDENTIFIER      shift and go to state 13
     (               shift and go to state 14
+    ADD_OP          shift and go to state 15
 
-    expression                     shift and go to state 25
+    expression                     shift and go to state 27
 
-state 20
+state 21
 
     (15) expression -> expression MUL_OP . expression
     (11) expression -> . NUMBER
@@ -317,32 +345,53 @@ state 20
     (13) expression -> . ( expression )
     (14) expression -> . expression ADD_OP expression
     (15) expression -> . expression MUL_OP expression
+    (16) expression -> . ADD_OP expression
 
     NUMBER          shift and go to state 12
     IDENTIFIER      shift and go to state 13
     (               shift and go to state 14
+    ADD_OP          shift and go to state 15
 
-    expression                     shift and go to state 26
+    expression                     shift and go to state 28
 
-state 21
+state 22
 
     (13) expression -> ( expression . )
     (14) expression -> expression . ADD_OP expression
     (15) expression -> expression . MUL_OP expression
 
-    )               shift and go to state 27
-    ADD_OP          shift and go to state 19
-    MUL_OP          shift and go to state 20
-
-
-state 22
-
-    (8) block -> BLOCKNAME ( listP . )
-
-    )               shift and go to state 28
+    )               shift and go to state 29
+    ADD_OP          shift and go to state 20
+    MUL_OP          shift and go to state 21
 
 
 state 23
+
+    (16) expression -> ADD_OP expression .
+    (14) expression -> expression . ADD_OP expression
+    (15) expression -> expression . MUL_OP expression
+
+    {               reduce using rule 16 (expression -> ADD_OP expression .)
+    ADD_OP          reduce using rule 16 (expression -> ADD_OP expression .)
+    MUL_OP          reduce using rule 16 (expression -> ADD_OP expression .)
+    ;               reduce using rule 16 (expression -> ADD_OP expression .)
+    $end            reduce using rule 16 (expression -> ADD_OP expression .)
+    }               reduce using rule 16 (expression -> ADD_OP expression .)
+    )               reduce using rule 16 (expression -> ADD_OP expression .)
+    ,               reduce using rule 16 (expression -> ADD_OP expression .)
+
+  ! ADD_OP          [ shift and go to state 20 ]
+  ! MUL_OP          [ shift and go to state 21 ]
+
+
+state 24
+
+    (8) block -> BLOCKNAME ( listP . )
+
+    )               shift and go to state 30
+
+
+state 25
 
     (9) listP -> expression .
     (10) listP -> expression . , listP
@@ -350,61 +399,57 @@ state 23
     (15) expression -> expression . MUL_OP expression
 
     )               reduce using rule 9 (listP -> expression .)
-    ,               shift and go to state 29
-    ADD_OP          shift and go to state 19
-    MUL_OP          shift and go to state 20
+    ,               shift and go to state 31
+    ADD_OP          shift and go to state 20
+    MUL_OP          shift and go to state 21
 
 
-state 24
+state 26
 
     (7) while -> WHILE expression { programme . }
 
-    }               shift and go to state 30
+    }               shift and go to state 32
 
 
-state 25
+state 27
 
     (14) expression -> expression ADD_OP expression .
     (14) expression -> expression . ADD_OP expression
     (15) expression -> expression . MUL_OP expression
 
-  ! shift/reduce conflict for ADD_OP resolved as shift
-  ! shift/reduce conflict for MUL_OP resolved as shift
     {               reduce using rule 14 (expression -> expression ADD_OP expression .)
+    ADD_OP          reduce using rule 14 (expression -> expression ADD_OP expression .)
     ;               reduce using rule 14 (expression -> expression ADD_OP expression .)
     $end            reduce using rule 14 (expression -> expression ADD_OP expression .)
     }               reduce using rule 14 (expression -> expression ADD_OP expression .)
     )               reduce using rule 14 (expression -> expression ADD_OP expression .)
     ,               reduce using rule 14 (expression -> expression ADD_OP expression .)
-    ADD_OP          shift and go to state 19
-    MUL_OP          shift and go to state 20
+    MUL_OP          shift and go to state 21
 
-  ! ADD_OP          [ reduce using rule 14 (expression -> expression ADD_OP expression .) ]
   ! MUL_OP          [ reduce using rule 14 (expression -> expression ADD_OP expression .) ]
+  ! ADD_OP          [ shift and go to state 20 ]
 
 
-state 26
+state 28
 
     (15) expression -> expression MUL_OP expression .
     (14) expression -> expression . ADD_OP expression
     (15) expression -> expression . MUL_OP expression
 
-  ! shift/reduce conflict for ADD_OP resolved as shift
-  ! shift/reduce conflict for MUL_OP resolved as shift
     {               reduce using rule 15 (expression -> expression MUL_OP expression .)
+    ADD_OP          reduce using rule 15 (expression -> expression MUL_OP expression .)
+    MUL_OP          reduce using rule 15 (expression -> expression MUL_OP expression .)
     ;               reduce using rule 15 (expression -> expression MUL_OP expression .)
     $end            reduce using rule 15 (expression -> expression MUL_OP expression .)
     }               reduce using rule 15 (expression -> expression MUL_OP expression .)
     )               reduce using rule 15 (expression -> expression MUL_OP expression .)
     ,               reduce using rule 15 (expression -> expression MUL_OP expression .)
-    ADD_OP          shift and go to state 19
-    MUL_OP          shift and go to state 20
 
-  ! ADD_OP          [ reduce using rule 15 (expression -> expression MUL_OP expression .) ]
-  ! MUL_OP          [ reduce using rule 15 (expression -> expression MUL_OP expression .) ]
+  ! ADD_OP          [ shift and go to state 20 ]
+  ! MUL_OP          [ shift and go to state 21 ]
 
 
-state 27
+state 29
 
     (13) expression -> ( expression ) .
 
@@ -418,7 +463,7 @@ state 27
     ,               reduce using rule 13 (expression -> ( expression ) .)
 
 
-state 28
+state 30
 
     (8) block -> BLOCKNAME ( listP ) .
 
@@ -427,7 +472,7 @@ state 28
     }               reduce using rule 8 (block -> BLOCKNAME ( listP ) .)
 
 
-state 29
+state 31
 
     (10) listP -> expression , . listP
     (9) listP -> . expression
@@ -437,15 +482,17 @@ state 29
     (13) expression -> . ( expression )
     (14) expression -> . expression ADD_OP expression
     (15) expression -> . expression MUL_OP expression
+    (16) expression -> . ADD_OP expression
 
     NUMBER          shift and go to state 12
     IDENTIFIER      shift and go to state 13
     (               shift and go to state 14
+    ADD_OP          shift and go to state 15
 
-    expression                     shift and go to state 23
-    listP                          shift and go to state 31
+    expression                     shift and go to state 25
+    listP                          shift and go to state 33
 
-state 30
+state 32
 
     (7) while -> WHILE expression { programme } .
 
@@ -454,16 +501,9 @@ state 30
     }               reduce using rule 7 (while -> WHILE expression { programme } .)
 
 
-state 31
+state 33
 
     (10) listP -> expression , listP .
 
     )               reduce using rule 10 (listP -> expression , listP .)
 
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for ADD_OP in state 25 resolved as shift
-WARNING: shift/reduce conflict for MUL_OP in state 25 resolved as shift
-WARNING: shift/reduce conflict for ADD_OP in state 26 resolved as shift
-WARNING: shift/reduce conflict for MUL_OP in state 26 resolved as shift

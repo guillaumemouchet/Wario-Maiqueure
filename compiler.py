@@ -121,9 +121,7 @@ def compile(self):
 def compile(self):
 	bytecode = ""
 	if len(self.children) == 1:
-		print("AAAAAAAAAAAA", self.children[0])
-		if(self.op == "-" | self.op == "+"):
-			bytecode = str(operations[self.op](0, self.children[0].tok))
+		bytecode = str(operations[self.op](0, self.children[0].tok))
 		#else raise erreur
 	else:
 		print("self.children[0].tok", self.children[0].tok)
