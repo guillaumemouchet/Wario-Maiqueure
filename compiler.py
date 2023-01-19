@@ -82,7 +82,8 @@ def compile(self):
 		try:
 			bytecode += str(vars[self.tok])
 		except:
-			bytecode += "ERROR IN TOKEN NODE"
+			print("Error: variable \"%s\" doesn't initiate" %str(self.tok))
+			bytecode = 0
 	else:
 		bytecode += "%s" % self.tok
 	return bytecode
@@ -148,7 +149,10 @@ def compile(self):
     bytecode += self.children[1].compile()
     bytecode += ", "
     try:
-        bytecode += self.children[2].compile()
+        bytecode += self.children[2].compile() # Continuer ici
+        if((self.children[2].compile()%90)!= 0):
+            print("Error: rotation must be 90, 180 or 270")
+            bytecode = 0
     except:
         bytecode += "0"
     bytecode += ")\n"
@@ -169,7 +173,6 @@ def compile(self):
 	
 	bytecode = ""
 	print("While counter", counter)
-	
 	## TRY THIS !!
 	while (int(self.children[0].compile())<=0):
 		#bytecode += f"{counter}\n"
