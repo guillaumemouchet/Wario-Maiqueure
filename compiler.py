@@ -40,8 +40,7 @@ def rotationToUnity(rotation:int):
 			return [0,1,180]
 		case 270:
 			print("------> 270")
-   #TODO
-			return [0.7071068,0.7071068,90]
+			return [-0.7071068,0.7071068,270]
 
             
 # operations = {
@@ -56,6 +55,8 @@ operations = {
     "*" : lambda x, y : x * y,
     "/" : lambda x, y : x / y
 }
+
+vars = {}
 
 def whilecounter():
 	whilecounter.current += 1
@@ -78,7 +79,10 @@ def compile(self):
 def compile(self):
 	bytecode = ""
 	if isinstance(self.tok, str):
-		bytecode += "%s" % self.tok
+		try:
+			bytecode += str(vars[self.tok])
+		except:
+			bytecode += "ERROR IN TOKEN NODE"
 	else:
 		bytecode += "%s" % self.tok
 	return bytecode
@@ -90,8 +94,16 @@ def compile(self):
 def compile(self):
 	# bytecode += self.children[1].compile()
 	# bytecode += "SET %s\n" % self.children[0].tok
-	return str(self.children[1].tok)
-	
+		# TODO regarder si il y a un OPNode à droit su assign node
+	try:
+		vars.update({self.children[0].tok : int(self.children[1].tok)})
+	except:
+		vars.update({self.children[0].tok : int(self.children[1].compile())})
+	#return str(self.children[1].tok)
+	#print("clé:", self.children[0].tok)
+	#print("valeur:", self.children[1].tok)
+
+	return ""
 # noeud d'affichage
 # exécute le noeud qui suit le PRINT
 # dépile un élément et l'affiche
@@ -109,12 +121,20 @@ def compile(self):
 def compile(self):
 	bytecode = ""
 	if len(self.children) == 1:
+		print("AAAAAAAAAAAA", self.children[0])
 		if(self.op == "-" | self.op == "+"):
 			bytecode = str(operations[self.op](0, self.children[0].tok))
 		#else raise erreur
 	else:
-		a = self.children[0].tok
-		b = self.children[1].tok
+		print("self.children[0].tok", self.children[0].tok)
+		print("self.children[1].tok",self.children[1].tok)
+		try:
+			a = int(self.children[0].tok)
+			b = int(self.children[1].tok)
+		except:
+			a = int(vars.get(self.children[0].tok))
+			b = int(self.children[1].tok)
+		print("opnode values",a,b)
 		res = str(operations[self.op](a, b))
 		bytecode += res
 	return bytecode
@@ -144,14 +164,22 @@ def compile(self):
 # réalise un saut conditionnel sur le résultat de la condition (empilé)
 @addToClass(AST.WhileNode)
 def compile(self):
+	print("While node 1 ", self.children)
+	print("While node 2 ",self.children[1].compile())
+	print("While node 3", self.children[0].compile())
 	counter = whilecounter()
+	
 	bytecode = ""
-	bytecode += f"{counter}\n"
-	bytecode += f"{counter}: "
-	bytecode += self.children[1].compile()
-	bytecode += f"{counter}: "
-	bytecode += self.children[0].compile()
-	bytecode += f"{counter}\n"
+	print("While counter", counter)
+	
+	## TRY THIS !!
+	while (int(self.children[0].compile())<=0):
+		#bytecode += f"{counter}\n"
+		#bytecode += f"{counter}: "
+		bytecode += str(self.children[1].compile())
+		#bytecode += f"{counter}: "
+		#bytecode += str(self.children[0].compile())
+		#bytecode += f"counter : {counter}\n"
 	return bytecode
 	
 if __name__ == "__main__":

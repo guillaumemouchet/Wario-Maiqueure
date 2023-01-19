@@ -1,8 +1,11 @@
-= a
-01
-1: BRICK(a, 0, 0)
-= a
-a1ADD
-1: a10SUB
-1
+BRICK(1, 0, 0)
+BRICK(2, 0, 0)
+BRICK(3, 0, 0)
+BRICK(4, 0, 0)
+BRICK(5, 0, 0)
+BRICK(6, 0, 0)
+BRICK(7, 0, 0)
+BRICK(8, 0, 0)
+BRICK(9, 0, 0)
+BRICK(10, 0, 0)
 SPIKE(10, 10, 0)

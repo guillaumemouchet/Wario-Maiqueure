@@ -1,2 +1,3 @@
 a=1;
-BRICK(-2,2-1)
+BRICK(0-3,5-1);
+BRICK(a,a,a)
