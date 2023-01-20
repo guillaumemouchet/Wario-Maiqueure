@@ -3,7 +3,7 @@ SPIKE(0,1);
 a=0;
 while(a-10)
 {
-BRICK(a,0+1);
-a=a+1
+    BRICK(a,0+1);
+    a=a+1
 };
 SPIKE(3, 0, 90)

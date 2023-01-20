@@ -147,10 +147,16 @@ def compile(self):
 @addToClass(AST.BlockNode)
 def compile(self):
 	global block_id
+	offsety = 0
+	offsetx = 0.5
 	AAAAA = block_id
 	BBBBB = block_id + 1
-	XXXXX = self.children[0].compile()
-	YYYYY = self.children[1].compile()
+ 
+	if self.name == "BRICK":
+		offsety = 0.5
+	
+	XXXXX = int(self.children[0].compile()) + offsetx
+	YYYYY = int(self.children[1].compile()) + offsety
 	try:
 		RRRRR = self.children[2].compile()
 	except:
