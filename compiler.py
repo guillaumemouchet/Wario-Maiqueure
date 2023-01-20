@@ -28,7 +28,6 @@ def rotationToUnity(rotation:int):
 	rotation = int(rotation)
 	if(rotation>=360):
 		rotation = rotation % 360
-  
 	match rotation:
 		case 0:
 			print("------> 0")
@@ -42,6 +41,12 @@ def rotationToUnity(rotation:int):
 		case 270:
 			print("------> 270")
 			return [-0.7071068,0.7071068,270]
+		case _:
+			print("------> Not found")
+			return [1,0,0]
+
+
+
 
             
 # operations = {
@@ -259,7 +264,10 @@ def end_of_exec():
 	FOOTER = "./prefabs/FOOTER.txt"
  
 	# Create final File
-	project = "./result/Projet Compilateur.unity"
+	project = "./Coding in Flow 2D Project/Assets/Scenes/Projet Compilateur.unity"
+	if os.path.exists(project):
+		os.remove(project)
+    
 	open(project, 'x')
  
  
@@ -300,9 +308,7 @@ def end_of_exec():
 			file.write(footer_data+"\n")
    
    	# Add Manually the result to the unity project
-	print("Projet Compilateur.unity Created succesfully, please move it in the folder of the Unity project")
-	print("Assets->Scenes-> replace old .unity file")
-
+	print("Projet Compilateur.unity Created succesfully, please reload project in Unity")
 
 	
 
