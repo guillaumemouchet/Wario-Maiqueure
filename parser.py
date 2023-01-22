@@ -41,19 +41,12 @@ def p_block(p):
 
 def p_listP(p):
     ''' listP : expression 
-                | expression ',' listP '''
-        
+                | expression ',' listP '''   
     try:
-        print("p1 t" , p[1])
-        print("p3 t" , p[3])
         p[0] = [p[1]]+p[3]
-        #p[0] = [p[1]]+p[3].children
-        print("p0 t",p[0])
     except:
-        
-            print("p1 e",p[1])
-            p[0] = [p[1]]
-            print("p0 e",p[0])
+        p[0] = [p[1]]
+
 
 def p_expression_num_or_var(p):
     '''expression : NUMBER 

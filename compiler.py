@@ -136,8 +136,16 @@ def compile(self):
 			a = int(self.children[0].tok)
 			b = int(self.children[1].tok)
 		except:
-			a = int(vars.get(self.children[0].tok))
-			b = int(self.children[1].tok)
+			try:
+				a = int(vars.get(self.children[0].tok))
+				b = int(self.children[1].tok)
+			except:
+				try:
+					a = int(vars.get(self.children[0].tok))
+					b = int(vars.get(self.children[1].tok))
+				except:
+					a = int(self.children[0].tok)
+					b = int(vars.get(self.children[1].tok))
 		print("opnode values",a,b)
 		res = str(operations[self.op](a, b))
 		bytecode += res
