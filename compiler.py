@@ -24,7 +24,7 @@ list_id_terrain = []
 '''
 return tuple[w,z,r] -> valued defined in ROTATION.txt
 '''
-def rotationToUnity(rotation:int):
+def rotation_to_unity(rotation:int):
 	rotation = int(rotation)
 	if(rotation>=360):
 		rotation = rotation % 360
@@ -155,8 +155,10 @@ def compile(self):
 @addToClass(AST.BlockNode)
 def compile(self):
 	global block_id
+ 
 	offsety = 0
 	offsetx = 0.5
+ 
 	AAAAA = block_id
 	BBBBB = block_id + 1
  
@@ -170,7 +172,7 @@ def compile(self):
 	except:
 		RRRRR = 0
    	
-	WWWWW, ZZZZZ, RRRRR = rotationToUnity(RRRRR)
+	WWWWW, ZZZZZ, RRRRR = rotation_to_unity(RRRRR)
 
 	list_id_terrain.append(AAAAA)
 
@@ -210,6 +212,7 @@ def compile(self):
     
     
 	block_id +=2
+ 
 	return bytecode
     
 	
@@ -321,7 +324,6 @@ def end_of_exec():
 				file.write(content+"\n")
 			file.write(footer_data+"\n")
    
-   	# Add Manually the result to the unity project
 	print("Projet Compilateur.unity Created succesfully, please reload project in Unity")
 
 	
