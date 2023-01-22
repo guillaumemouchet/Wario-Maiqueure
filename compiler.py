@@ -181,13 +181,13 @@ def compile(self):
 	shutil.copyfile(source, destination)
 	with open(destination, 'r') as file:
 		data = file.read()
-		data = data.replace("AAAAA", str(AAAAA))
-		data = data.replace("BBBBB", str(BBBBB))
-		data = data.replace("XXXXX", str(XXXXX))
-		data = data.replace("YYYYY", str(YYYYY))
-		data = data.replace("WWWWW", str(WWWWW))
-		data = data.replace("ZZZZZ", str(ZZZZZ))
-		data = data.replace("RRRRR", str(RRRRR))
+		data = data.replace("AAAAA", str(AAAAA)) # ID of the transformation of the prefab instance -> used in the TERRAIN_MIDDLE_Modified
+		data = data.replace("BBBBB", str(BBBBB)) # ID of the prefab instance
+		data = data.replace("XXXXX", str(XXXXX)) # x position
+		data = data.replace("YYYYY", str(YYYYY)) # y position
+		data = data.replace("WWWWW", str(WWWWW)) # used for the rotation
+		data = data.replace("ZZZZZ", str(ZZZZZ)) # used for the rotation
+		data = data.replace("RRRRR", str(RRRRR)) # rotation in degre
 
 	with open(destination, 'w') as file:
 	
