@@ -1,7 +1,30 @@
 a = 0;
 while(a-10)
 {
-    BRICK(a+2,0);
+    BRICK(a+2,2);
     a = a+1
 };
-SPIKE(15,0)
+SPIKE(15,0);
+SPIKE(16,0);
+SPIKE(17,0);
+
+b = 0;
+while(b-20)
+{
+    SPIKE(b+22,-3);
+    b = b+1
+};
+
+
+d = 0;
+while(d-5)
+{
+c = d + 0;
+while(c-6)
+{
+    BRICK(c+40,d);
+    c = c+1
+};
+    d = d + 1
+};
+SPIKE(55,0)
