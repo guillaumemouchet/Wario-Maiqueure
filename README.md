@@ -12,6 +12,7 @@ Les différentes extensions de python nécessaires aux fonctionnement du compila
 - Yacc
 - PLY
 - Pydot
+- Graphviz
 
 Une fois toutes les extensions installées et le projet Unity mis en place il est possible d'exécuter la compilation avec la commande "python compiler.py <nomdelinput>.txt" depuis le folder du projet.
 
