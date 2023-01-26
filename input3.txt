@@ -6,4 +6,4 @@ while(a-11)
     BRICK(a+20,0+2);
     a=a+1
 };
-SPIKE(20, 2, 180)
+SPIKE(21, 2, 180)

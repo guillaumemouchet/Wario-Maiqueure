@@ -27,21 +27,22 @@ list_position_block = [[0,0.5],[0,1.5]]
 '''
 return tuple[w,z,r] -> valued defined in ROTATION.txt
 '''
-def rotation_to_unity(rotation:int):
-	rotation = int(rotation)
+def rotation_to_unity(rotation):
+	rotation = float(rotation)
+	print("rotation",rotation)
 	if(rotation>=360):
 		rotation = rotation % 360
 	match rotation:
-		case 0:
+		case 0.0:
 			print("------> 0")
 			return [1,0,0]
-		case 90:
+		case 90.0:
 			print("------> 90")
 			return [0.7071068,0.7071068,90]
-		case 180:
+		case 180.0:
 			print("------> 180")
 			return [0,1,180]
-		case 270:
+		case 270.0:
 			print("------> 270")
 			return [-0.7071068,0.7071068,270]
 		case _:
@@ -105,9 +106,9 @@ def compile(self):
 	# bytecode += self.children[1].compile()
 	# bytecode += "SET %s\n" % self.children[0].tok
 	try:
-		vars.update({self.children[0].tok : int(self.children[1].tok)})
+		vars.update({self.children[0].tok : float(self.children[1].tok)})
 	except:
-		vars.update({self.children[0].tok : int(self.children[1].compile())})
+		vars.update({self.children[0].tok : float(self.children[1].compile())})
 	#return str(self.children[1].tok)
 	#print("clé:", self.children[0].tok)
 	#print("valeur:", self.children[1].tok)
@@ -136,19 +137,19 @@ def compile(self):
 		print("self.children[0].tok", self.children[0].tok)
 		print("self.children[1].tok",self.children[1].tok)
 		try:
-			a = int(self.children[0].tok)
-			b = int(self.children[1].tok)
+			a = float(self.children[0].tok)
+			b = float(self.children[1].tok)
 		except:
 			try:
-				a = int(vars.get(self.children[0].tok))
-				b = int(self.children[1].tok)
+				a = float(vars.get(self.children[0].tok))
+				b = float(self.children[1].tok)
 			except:
 				try:
-					a = int(vars.get(self.children[0].tok))
-					b = int(vars.get(self.children[1].tok))
+					a = float(vars.get(self.children[0].tok))
+					b = float(vars.get(self.children[1].tok))
 				except:
-					a = int(self.children[0].tok)
-					b = int(vars.get(self.children[1].tok))
+					a = float(self.children[0].tok)
+					b = float(vars.get(self.children[1].tok))
 		print("opnode values",a,b)
 		res = str(operations[self.op](a, b))
 		bytecode += res
@@ -169,9 +170,12 @@ def compile(self):
 	if self.name == "BRICK":
 		offsety = 0.5
 	
-	XXXXX = int(self.children[0].compile()) + offsetx
-	YYYYY = int(self.children[1].compile()) + offsety
+	XXXXX = float(self.children[0].compile()) + offsetx
+	YYYYY = float(self.children[1].compile()) + offsety
  
+	print(XXXXX)
+	print(YYYYY)
+
 	if(list_position_block.count([XXXXX,YYYYY])):
 		raise Exception("A block was already placed at this position")
 
@@ -246,7 +250,7 @@ def compile(self):
 	bytecode = ""
 	print("While counter", counter)
 	
-	while (int(self.children[0].compile())<=0):
+	while (float(self.children[0].compile())<=0):
 		bytecode += str(self.children[1].compile())
 	return bytecode
 

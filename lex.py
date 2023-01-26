@@ -22,9 +22,9 @@ literals = '( ) ; , { } ='
 t_ignore  = ' \t'
  
 def t_NUMBER(t):
-    r'\d+'
+    r'([0-9]*[.])?[0-9]+'
     try:
-        t.value = int(t.value)    
+        t.value = float(t.value)    
     except ValueError:
         print ("Line %d: Problem while parsing %s!" % (t.lineno,t.value))
         t.value = 0
