@@ -179,7 +179,7 @@ def compile(self):
 		raise Exception("x=",XXXXX," position is out of bound")
 
 	if( -3 > YYYYY or YYYYY > 15):
-		raise Exception("y=",YYYYY," position is out 	of bound")
+		raise Exception("y=",YYYYY," position is out of bound")
 
 	list_position_block.append([XXXXX,YYYYY])
 
