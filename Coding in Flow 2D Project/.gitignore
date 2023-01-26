@@ -14,6 +14,11 @@
 /[Uu]ser[Ss]ettings/
 /result/
 
+# added manually
+*.vm
+*.pdf
+result/
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
