@@ -27,4 +27,6 @@ while(c-6)
 };
     d = d + 1
 };
+BRICK(55,5);
+SPIKE(55,5,180);
 SPIKE(55,0)
