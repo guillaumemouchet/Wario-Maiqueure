@@ -1,7 +1,7 @@
-a=0;
-while(a-10)
+a=1;
+while(a-11)
 {
-    BRICK(a,0+1);
+    BRICK(a,0+2);
     a=a+1
 };
-SPIKE(10,10)
+SPIKE(10,0)

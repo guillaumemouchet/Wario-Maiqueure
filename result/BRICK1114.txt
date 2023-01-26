@@ -1,4 +1,4 @@
---- !u!1001 &1001
+--- !u!1001 &1115
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -143,11 +143,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5356285402130426260, guid: 21fc9bd62d8b5004e94f3809cb3d2cab, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2.5
+      value: 44.5
       objectReference: {fileID: 0}
     - target: {fileID: 5356285402130426260, guid: 21fc9bd62d8b5004e94f3809cb3d2cab, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.5
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 5356285402130426260, guid: 21fc9bd62d8b5004e94f3809cb3d2cab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -163,8 +163,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21fc9bd62d8b5004e94f3809cb3d2cab, type: 3}
---- !u!224 &1000 stripped
+--- !u!224 &1114 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5356285402130426260, guid: 21fc9bd62d8b5004e94f3809cb3d2cab, type: 3}
-  m_PrefabInstance: {fileID: 1001}
+  m_PrefabInstance: {fileID: 1115}
   m_PrefabAsset: {fileID: 0}

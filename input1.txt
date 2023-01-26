@@ -1,3 +1,3 @@
-BRICK(-1,2);
+BRICK(1,2);
 a = -2;
-BRICK(1,a)
+BRICK(30 ,a , 90)

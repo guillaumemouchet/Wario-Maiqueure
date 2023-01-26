@@ -1,9 +1,9 @@
-BRICK(1,1);
-SPIKE(0,1);
-a=0;
-while(a-10)
+BRICK(1,2);
+SPIKE(1,3);
+a=1;
+while(a-11)
 {
-    BRICK(a,0+1);
+    BRICK(a+20,0+2);
     a=a+1
 };
-SPIKE(3, 0, 90)
+SPIKE(20, 2, 180)
