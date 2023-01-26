@@ -29,5 +29,8 @@ while(c-6)
 };
 BRICK(55,5);
 SPIKE(55,5,180);
+<<<<<<< HEAD
 SPIKE(39.5,0.5,90);
+=======
+>>>>>>> 62d8a7be192c7dff88bc30c651758cd010ed1f9c
 SPIKE(55,0)
