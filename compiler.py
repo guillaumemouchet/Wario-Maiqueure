@@ -21,6 +21,9 @@ block_id = 1000
 #List of first id of each block, to be added in the TERRAIN_MIDDLE.txt file
 list_id_terrain = []
 
+# List of tuple of position x,y of each block
+list_position_block = [[0,0.5],[0,1.5]]
+
 '''
 return tuple[w,z,r] -> valued defined in ROTATION.txt
 '''
@@ -43,7 +46,7 @@ def rotation_to_unity(rotation:int):
 			return [-0.7071068,0.7071068,270]
 		case _:
 			print("------> Not found")
-			return [1,0,0]
+			raise Exception("Rotation must be a multiple of 90 degree")
 
 
 
@@ -89,7 +92,7 @@ def compile(self):
 		try:
 			bytecode += str(vars[self.tok])
 		except:
-			bytecode += "ERROR IN TOKEN NODE"
+			raise Exception("Token used but was not initialised")
 	else:
 		bytecode += "%s" % self.tok
 	return bytecode
@@ -151,6 +154,7 @@ def compile(self):
 		bytecode += res
 	return bytecode
 
+# 0 < x < 64
 # Create block in format NAME(x,y,rot)
 @addToClass(AST.BlockNode)
 def compile(self):
@@ -167,6 +171,18 @@ def compile(self):
 	
 	XXXXX = int(self.children[0].compile()) + offsetx
 	YYYYY = int(self.children[1].compile()) + offsety
+ 
+	if(list_position_block.count([XXXXX,YYYYY])):
+		raise Exception("A block was already placed at this position")
+
+	if( 1.5 > XXXXX or XXXXX > 63.5):
+		raise Exception("x=",XXXXX," position is out of bound")
+
+	if( -3 > YYYYY or YYYYY > 15):
+		raise Exception("y=",YYYYY," position is out of bound")
+
+	list_position_block.append([XXXXX,YYYYY])
+
 	try:
 		RRRRR = self.children[2].compile()
 	except:
@@ -192,7 +208,6 @@ def compile(self):
 		data = data.replace("RRRRR", str(RRRRR)) # rotation in degre
 
 	with open(destination, 'w') as file:
-	
 		# Writing the replaced data in our
 		# text file
 		file.write(data)

@@ -1,2 +1,2 @@
-a=45;
-BRICK(1+a, a+2, a+a)
+BRICK(30,-3);
+SPIKE(31,-3)
